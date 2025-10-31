@@ -7,8 +7,10 @@ import org.springframework.http.ResponseEntity;
 import java.util.UUID;
 
 public interface UserService {
-    ResponseEntity<ResponseDTO> createUser(User user);
-    ResponseEntity<ResponseDTO> updateUser(User user);
-    ResponseEntity<ResponseDTO> findUserById(UUID id);
-    ResponseEntity<ResponseDTO> deleteUserById(UUID id);
+    ResponseDTO createUser(User user);
+    ResponseDTO updateUser(User user);
+    ResponseDTO findAllUsers(int page, int size, String search);
+    ResponseDTO findUserById(UUID id);
+    ResponseDTO deleteUserById(UUID id);
+    ResponseDTO updateUserAddress(UUID id, String address);
 }
