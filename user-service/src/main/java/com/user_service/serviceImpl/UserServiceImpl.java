@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -22,9 +23,12 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepo;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepo userRepo) {
+
+    public UserServiceImpl(UserRepo userRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -59,6 +63,10 @@ public class UserServiceImpl implements UserService {
             // Save user record
             log.info("Saving new user record...");
             User savedUser = userRepo.save(user);
+
+            String encodedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(encodedPassword);
+            log.info("Password encrypted successfully before saving user.");
 
             log.info("User created successfully with ID: {}", savedUser.getId());
             return AppUtils.getResponseDto("User was created successfully", HttpStatus.CREATED, savedUser);

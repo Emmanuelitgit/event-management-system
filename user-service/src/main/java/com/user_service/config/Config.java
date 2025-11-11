@@ -39,11 +39,11 @@ public class Config {
                 .csrf((AbstractHttpConfigurer::disable))
                 .cors((AbstractHttpConfigurer::disable))
 
-//                .oauth2ResourceServer((auth->{
-//                    auth.jwt(jwt->{
-//                        jwt.jwtAuthenticationConverter(jwtAuthConverter);
-//                    });
-//                }))
+                .oauth2ResourceServer((auth->{
+                    auth.jwt(jwt->{
+                        jwt.jwtAuthenticationConverter(jwtAuthConverter);
+                    });
+                }))
                 .oauth2ResourceServer(AbstractHttpConfigurer::disable)
 
                 .build();
